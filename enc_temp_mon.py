@@ -88,8 +88,7 @@ def turnOff(which):
 def doLoop():
     current_state = "still off"
     while True:
-        #try:
-        if 1 == 1:
+        try:
             celsius, relative_humidity = sht.measurements
             fahrenheit = (celsius * 1.8) + 32
             print("%0.1f F" % fahrenheit)
@@ -107,13 +106,13 @@ def doLoop():
                 
             time.sleep(2)
 
-        #except KeyboardInterrupt:
-        #    print("KeyboardInterrupt")
-        #    break
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt")
+            break
 
-        #except:
-        #    print("except")
-        #    time.sleep(0.5)
+        except:
+            print("except") # not helpful lol
+            time.sleep(0.5)
     
 def Cleanup():
     print("    Cleanup")
