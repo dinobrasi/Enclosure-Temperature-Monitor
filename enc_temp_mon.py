@@ -94,7 +94,7 @@ def doLoop():
             print("%0.1f F" % fahrenheit)
             #return json.dumps({'temperature': "%0.1f F" % fahrenheit,
             #                   'humidity': "%0.1f %%" % relative_humidity})            
-            if fahrenheit > start_heat:
+            if fahrenheit < start_heat:
                 if current_state != heat:
                     turnOn(heat)
                     current_state = heat
