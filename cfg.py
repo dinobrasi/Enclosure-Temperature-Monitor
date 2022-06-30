@@ -1,0 +1,20 @@
+config = {
+    "start_heat" : 20,
+    "start_cool" : 76,
+    "led_heat" : 23,
+    "led_cool" : 24,
+    "led_power" : 25,
+    "relay_heat" : 17,
+    "relay_cool" : 27,
+    "heat" : "Heat",
+    "cool" : "Cool",
+    "off" : "Off",
+    "lcdmode" : "i2c",
+    "cols" : 20,
+    "rows" : 4,
+    "charmap" : "A00",
+    "i2c_expander" : "PCF8574",
+    "address" : 0x27,
+    "port" : 1,
+    "loop_delay": 5
+}
