@@ -29,9 +29,8 @@ def shutdown():
 		#Use falling edge detection to see if pin is pulled 
 		#low to avoid repeated polling
 		
-		#os.system("sudo shutdown -h now")
-		
-		print("shutdown")
+		print("Shutdown in progress...")
+		os.system("sudo shutdown -h now")
 		
 		#Send command to system to shutdown
 	except:
