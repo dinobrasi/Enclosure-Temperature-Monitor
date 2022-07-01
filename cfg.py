@@ -1,6 +1,6 @@
 config = {
     "start_heat" : 20,
-    "start_cool" : 76,
+    "start_cool" : 90,
     "led_heat" : 23,
     "led_cool" : 24,
     "led_power" : 25,
@@ -16,5 +16,5 @@ config = {
     "i2c_expander" : "PCF8574",
     "address" : 0x27,
     "port" : 1,
-    "loop_delay": 5
+    "loop_delay": 60
 }
