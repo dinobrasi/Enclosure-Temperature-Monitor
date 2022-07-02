@@ -29,6 +29,7 @@ def setup():
     print("    Setup")
     GPIO.setmode(GPIO.BCM)
 
+    GPIO.setup(config["lcd_switch"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(config["relay_heat"], GPIO.OUT)
     GPIO.setup(config["relay_cool"], GPIO.OUT)
     GPIO.setup(config["led_heat"], GPIO.OUT)
@@ -75,34 +76,44 @@ def turnOff(which):
 
 def doLoop():
     current_state = config["off"]
+    lcd_state = config["lcd_state"]
+    
     while True:
+        #if 1 == 1:
         try:
-                celsius, relative_humidity = sht.measurements
-                fahrenheit = (celsius * 1.8) + 32
-                print("%0.1f F" % fahrenheit)
-                text = "%0.1f F" % fahrenheit
-                setDisplay_CurrentTemp(text)
-                #return json.dumps({'temperature': "%0.1f F" % fahrenheit,
-                #                   'humidity': "%0.1f %%" % relative_humidity})
-                
-                if fahrenheit > config["start_heat"] and fahrenheit < config["start_cool"]:
-                    if current_state != config["off"]:
-                        turnOff(config["heat"])
-                        turnOff(config["cool"])
-                        current_state = config["off"]
+            celsius, relative_humidity = sht.measurements
+            fahrenheit = (celsius * 1.8) + 32
+            print("%0.1f F" % fahrenheit)
+            text = "%0.1f F" % fahrenheit
+            setDisplay_CurrentTemp(text)
+            #return json.dumps({'temperature': "%0.1f F" % fahrenheit,
+            #                   'humidity': "%0.1f %%" % relative_humidity})
+            
+            if fahrenheit > config["start_heat"] and fahrenheit < config["start_cool"]:
+                if current_state != config["off"]:
+                    turnOff(config["heat"])
+                    turnOff(config["cool"])
+                    current_state = config["off"]
+            else:
+                if fahrenheit <= config["start_heat"]:
+                    if current_state != config["heat"]:
+                        turnOn(config["heat"])
+                        current_state = config["heat"]
                 else:
-                    if fahrenheit <= config["start_heat"]:
-                        if current_state != config["heat"]:
-                            turnOn(config["heat"])
-                            current_state = config["heat"]
-                    else:
-                        if fahrenheit >= config["start_cool"]:
-                            if current_state != config["cool"]:
-                                turnOn(config["cool"])
-                                current_state = config["cool"]
+                    if fahrenheit >= config["start_cool"]:
+                        if current_state != config["cool"]:
+                            turnOn(config["cool"])
+                            current_state = config["cool"]
 
-                setDisplay_CurrentState(current_state)
-                time.sleep(config["loop_delay"])
+            if GPIO.input(config["lcd_switch"]) == GPIO.LOW:
+                if lcd_state == True:
+                    lcd_state = False
+                else:
+                    lcd_state = True
+                lcd.backlight_enabled = lcd_state
+
+            setDisplay_CurrentState(current_state)
+            time.sleep(config["loop_delay"])
 
         except KeyboardInterrupt:
             print("KeyboardInterrupt")
@@ -115,14 +126,17 @@ def doLoop():
 def setDisplay_CurrentTemp(temp):
     lcd.cursor_pos = (0,14) # base zero
     lcd.write_string(temp)
+
 def setDisplay_CurrentState(state):
     lcd.cursor_pos = (1,14) # base zero
     lcd.write_string(state + " ")
+
 def setDisplay_Triggers():
     lcd.cursor_pos = (2,14) # base zero
     lcd.write_string(str(config["start_heat"]))
     lcd.cursor_pos = (3,14) # base zero
     lcd.write_string(str(config["start_cool"]))
+
 def Cleanup():
     print("    Cleanup")
     GPIO.setup(config["relay_heat"], False)
@@ -138,7 +152,7 @@ def Cleanup():
 if __name__ == '__main__':
     print("Start")
 
-    print(str(config["start_heat"]))
+    #print(str(config["start_heat"]))
     try:
         setup()
         GPIO.output(config["led_power"], True)
