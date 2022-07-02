@@ -16,5 +16,7 @@ config = {
     "i2c_expander" : "PCF8574",
     "address" : 0x27,
     "port" : 1,
-    "loop_delay": 60
+    "loop_delay": 1,
+    "lcd_switch" : 12,
+    "lcd_state" : True    
 }
