@@ -1,4 +1,4 @@
-config = {
+old_config = {
     "start_heat" : 20,
     "start_cool" : 90,
     "led_heat" : 23,
@@ -19,4 +19,37 @@ config = {
     "loop_delay": 1,
     "lcd_switch" : 12,
     "lcd_state" : True    
+}
+config = {
+    "address" : 0x27,
+    "button_display" : 11,
+    "button_shutdown" : 9,
+    "charmap" : "A00",
+    "cols" : 20,
+    "cool" : "Cool",
+    "heat" : "Heat",
+    "i2c _ground" : "PIN_9",
+    "i2c _power_3" : "PIN_1",
+    "i2c_expander" : "PCF8574",
+    "i2c_power_5" : "PIN_2",
+    "i2c_scl" : 3,
+    "i2c_sda" : 2,
+    "lcd_state" : True  
+    "lcdmode" : "i2c",
+    "led_gate_closed" : 19,
+    "led_gate_open" : 26,
+    "led_ground" : "PIN_39",
+    "led_power" : 5,
+    "led_temp_cool" : 6,
+    "led_temp_heat" : 13,
+    "loop_delay" : 1,
+    "off" : "Off",
+    "port" : 1,
+    "relay_temp_cool" : 27,
+    "relay_temp_heat" : 17,
+    "rows" : 4,
+    "sensor_gate" : "PIN_14",
+    "sensor_gate" : 23,
+    "start_cool" : 90,
+    "start_heat" : 20,
 }
