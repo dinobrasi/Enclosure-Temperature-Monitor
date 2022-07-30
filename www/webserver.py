@@ -1,10 +1,13 @@
+#sudo python3 /home/tim/Documents/www/webserver.py
+
 from flask import Flask, render_template
 from functions import getPublicIP
-
+import sys
+import time
 
 #net = "eth0"
 net = "wlan0"
-expected_ip = "192.168.241."# waiting for the network at boot. I know there is a setting, but it wasn't working for me.
+expected_ip = "192.168.1.241"# waiting for the network at boot. I know there is a setting, but it wasn't working for me.
 waiting = True
 counter = 0
 
