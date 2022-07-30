@@ -21,8 +21,8 @@ from adafruit_pca9685 import PCA9685
 bi2c = busio.I2C(SCL, SDA)
 pca = PCA9685(bi2c)
 pca.frequency = 50
-openVal = 90
-closedVal = 180
+openVal = 40
+closedVal = 96
 
 servo0 = servo.Servo(pca.channels[0], min_pulse=600, max_pulse=2600)
 # new - end
@@ -87,6 +87,7 @@ def setup():
     setDisplay_Triggers()
 
 def setGateFile(state):
+    #print("set gate file:", state)
     MyFile = open("/home/tim/Documents/www/templates/index.html", "w+")
     MyFile.write(state)
     MyFile.close()
@@ -140,6 +141,7 @@ def doLoop():
         #if 1 == 1:
         try:
             sensor_state = GPIO.input(gate_sensor)
+            #print("sensor_state:", sensor_state)
             if sensor_state == False:
                 GPIO.output(gate_led_open, False)
                 GPIO.output(gate_led_closed, True)
@@ -147,7 +149,7 @@ def doLoop():
             else:
                 GPIO.output(gate_led_open, True)
                 GPIO.output(gate_led_closed, False)
-                gate_state_this = "Opened"   
+                gate_state_this = "Open"   
             
             if gate_state_last != gate_state_this:
                 #print("Gate state changed to", gate_state_this)

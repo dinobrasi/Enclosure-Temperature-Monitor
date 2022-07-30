@@ -1,6 +1,6 @@
 config = {
     "start_heat" : 20,
-    "start_cool" : 90,
+    "start_cool" : 80,
     "led_heat" : 13,
     "led_cool" : 6,
     "led_power" : 5,
