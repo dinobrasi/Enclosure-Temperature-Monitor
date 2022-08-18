@@ -21,10 +21,9 @@ from adafruit_pca9685 import PCA9685
 bi2c = busio.I2C(SCL, SDA)
 pca = PCA9685(bi2c)
 pca.frequency = 50
-openVal = 40
-closedVal = 96
 
 servo0 = servo.Servo(pca.channels[0], min_pulse=600, max_pulse=2600)
+servo1 = servo.Servo(pca.channels[1], min_pulse=600, max_pulse=2600)
 # new - end
 
 from cfg import config
@@ -118,14 +117,21 @@ def turnOff(which):
         GPIO.output(config["relay_cool"], GPIO.HIGH)
         GPIO.output(config["led_cool"], False)
 
+#    "vent_side_open": 40,
+#    "vent_side_closed": 96,
+#    "vent_front_open": 2,
+#    "vent_front_closed": 178
+
 def doOpen():
     #print("    Vent: Open")
-    servo0.angle = openVal
+    servo0.angle = config["vent_side_open"]
+    servo1.angle = config["vent_front_open"]
     setDisplay_Vent("Open")
     
 def doClose():
     #print("    Vent: Closed")
-    servo0.angle = closedVal
+    servo0.angle = config["vent_side_closed"]
+    servo1.angle = config["vent_front_closed"]
     setDisplay_Vent("Closed")
 
 def doLoop():

@@ -17,7 +17,6 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-sudo python3 /home/tim/Documents/www/webserver.py &
 sudo python3 /home/tim/Documents/Enclosure-Temperature-Monitor-main/shutdown.py &
 sudo python3 /home/tim/Documents/Enclosure-Temperature-Monitor-main/enc_temp_mon.py &
 
