@@ -87,7 +87,7 @@ def setup():
 
 def setGateFile(state):
     #print("set gate file:", state)
-    MyFile = open("/home/tim/Documents/www/templates/index.html", "w+")
+    MyFile = open("/home/tim/Documents/www/index.html", "w+")
     MyFile.write(state)
     MyFile.close()
 

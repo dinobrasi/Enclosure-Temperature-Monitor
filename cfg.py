@@ -22,8 +22,8 @@ config = {
     "lcd_switch" : 11,
     "lcd_state" : False,
     "sensor_gate": 23,
-    "vent_side_open": 30,
-    "vent_side_closed": 106,
+    "vent_side_open": 40,
+    "vent_side_closed": 96,
     "vent_front_open": 2,
     "vent_front_closed": 178
 }
