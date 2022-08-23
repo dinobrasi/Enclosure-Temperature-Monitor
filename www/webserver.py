@@ -32,7 +32,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route('/')
 def index():
-    f = open("/home/tim/Documents/www/templates/index.html", "r")
+    f = open("/home/tim/Documents/www/index.html", "r")
     return f.read()
     #return render_template("index.html")
 
