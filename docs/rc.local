@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+sudo python3 /home/tim/Documents/etm/app/webserver.py &
+sudo python3 /home/tim/Documents/etm/app/shutdown.py &
+sudo python3 /home/tim/Documents/etm/app/enc_temp_mon.py &
+
+exit 0
