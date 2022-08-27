@@ -1,37 +1,29 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from adafruit_motor import servo
+from adafruit_pca9685 import PCA9685
+from board import SCL, SDA
+from cfg import config
 from RPLCD import i2c
 from time import sleep
 
-#2022-07-23 import adafruit_shtc3
 import board
+import busio
 import json
 import RPi.GPIO as GPIO
 import smbus
 import sys
 import time
-#2022-07-23 from functions import getPublicIP
 
-# new
-from board import SCL, SDA
-import busio
-from adafruit_motor import servo
-from adafruit_pca9685 import PCA9685
 bi2c = busio.I2C(SCL, SDA)
 pca = PCA9685(bi2c)
 pca.frequency = 50
 
 servo0 = servo.Servo(pca.channels[0], min_pulse=600, max_pulse=2600)
 servo1 = servo.Servo(pca.channels[1], min_pulse=600, max_pulse=2600)
-# new - end
-
-from cfg import config
 
 GPIO.setwarnings(False)
-
-#2022-07-23 i2cb = board.I2C()
-#2022-07-23 sht = adafruit_shtc3.SHTC3(i2cb)
 
 current_state = config["off"]
 lcd = i2c.CharLCD(config["i2c_expander"],
@@ -117,11 +109,6 @@ def turnOff(which):
         GPIO.output(config["relay_cool"], GPIO.HIGH)
         GPIO.output(config["led_cool"], False)
 
-#    "vent_side_open": 40,
-#    "vent_side_closed": 96,
-#    "vent_front_open": 2,
-#    "vent_front_closed": 178
-
 def doOpen():
     #print("    Vent: Open")
     servo0.angle = config["vent_side_open"]
@@ -144,10 +131,8 @@ def doLoop():
     gate_led_closed = config["gate_led_closed"]
     
     while True:
-        #if 1 == 1:
         try:
             sensor_state = GPIO.input(gate_sensor)
-            #print("sensor_state:", sensor_state)
             if sensor_state == False:
                 GPIO.output(gate_led_open, False)
                 GPIO.output(gate_led_closed, True)
@@ -158,7 +143,6 @@ def doLoop():
                 gate_state_this = "Open"   
             
             if gate_state_last != gate_state_this:
-                #print("Gate state changed to", gate_state_this)
                 if (gate_state_this == "Open"):
                     GPIO.output(config["gate_led_open"], True)
                     GPIO.output(config["gate_led_closed"], False)
@@ -178,14 +162,8 @@ def doLoop():
                     celsius -= 8192
             celsius = celsius * 0.0625
             fahrenheit = (celsius * 1.8) + 32
-            
-            #2022-07-23 celsius, relative_humidity = sht.measurements
-            #2022-07-23 fahrenheit = (celsius * 1.8) + 32
-            #print("%0.1f F" % fahrenheit)
             text = "%0.0f" % fahrenheit
             setDisplay_CurrentTemp(text)
-            #return json.dumps({'temperature': "%0.1f F" % fahrenheit,
-            #                   'humidity': "%0.1f %%" % relative_humidity})
             
             if fahrenheit > config["start_heat"] and fahrenheit < config["start_cool"]:
                 if current_state != config["off"]:
