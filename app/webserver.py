@@ -7,7 +7,7 @@ import time
 
 #net = "eth0"
 net = "wlan0"
-expected_ip = "192.168.1.241"# waiting for the network at boot. I know there is a setting, but it wasn't working for me.
+expected_ip = "192.168.0.241" # waiting for the network at boot. I know there is a setting, but it wasn't working for me.
 waiting = True
 counter = 0
 
@@ -25,7 +25,7 @@ while waiting:
         if counter == 1000:
             waiting = False 
     
-    time.sleep(1)# waiting for the network at boot. I know there is a setting, but it wasn't working for me.
+    time.sleep(1) # waiting for the network at boot. I know there is a setting, but it wasn't working for me.
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0

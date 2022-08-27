@@ -1,6 +1,6 @@
 config = {
-    "start_heat" : 20,
-    "start_cool" : 80,
+    "start_heat" : 30,
+    "start_cool" : 90,
     "gpio_lcd_switch" : 11,
     "gpio_led_heat" : 13,
     "gpio_led_cool" : 6,
@@ -22,7 +22,6 @@ config = {
     "port" : 1,
     "loop_delay": 1,
     "lcd_state" : False,
-
     "vent_side_open": 30,
     "vent_side_closed": 106,
     "vent_front_open": 2,
